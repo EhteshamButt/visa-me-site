@@ -24,7 +24,6 @@ export default function LeadMagnetForm() {
         data-format="inline"
         data-version="5"
         className="kit-inline-form formkit-form"
-        min-width="400 500 600 700 800"
       >
         <div className="input-group">
           <input
