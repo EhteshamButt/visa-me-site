@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { useLanguage } from "@/context/LanguageContext";
 
 const languages = [
   { code: "en", flag: "🇺🇸", name: "English", region: "United States" },
@@ -14,7 +15,7 @@ const languages = [
 
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeLang, setActiveLang] = useState("en");
+  const { lang: activeLang, setLang, t } = useLanguage();
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -57,11 +58,11 @@ export default function Nav() {
         </Link>
 
         <div style={{ display: "flex", gap: 28, alignItems: "center", flexWrap: "wrap" }}>
-          <Link href="/#quiz" style={{ textDecoration: "none", color: "var(--ink-soft)", fontWeight: 500, fontSize: 14 }}>Find Your Visa</Link>
-          <Link href="/#products" style={{ textDecoration: "none", color: "var(--ink-soft)", fontWeight: 500, fontSize: 14 }}>Guides</Link>
-          <Link href="/checklists" style={{ textDecoration: "none", color: "var(--ink-soft)", fontWeight: 500, fontSize: 14 }}>Checklists</Link>
+          <Link href="/#quiz" style={{ textDecoration: "none", color: "var(--ink-soft)", fontWeight: 500, fontSize: 14 }}>{t("nav.quiz")}</Link>
+          <Link href="/#products" style={{ textDecoration: "none", color: "var(--ink-soft)", fontWeight: 500, fontSize: 14 }}>{t("nav.guides")}</Link>
+          <Link href="/checklists" style={{ textDecoration: "none", color: "var(--ink-soft)", fontWeight: 500, fontSize: 14 }}>{t("nav.checklists")}</Link>
           <Link href="/blog" style={{ textDecoration: "none", color: "var(--ink-soft)", fontWeight: 500, fontSize: 14 }}>Blog</Link>
-          <Link href="/#faq" style={{ textDecoration: "none", color: "var(--ink-soft)", fontWeight: 500, fontSize: 14 }}>FAQ</Link>
+          <Link href="/#faq" style={{ textDecoration: "none", color: "var(--ink-soft)", fontWeight: 500, fontSize: 14 }}>{t("nav.faq")}</Link>
           <Link href="/#lead-magnet" style={{
             textDecoration: "none",
             background: "var(--navy)",
@@ -70,7 +71,7 @@ export default function Nav() {
             borderRadius: 4,
             fontWeight: 700,
             fontSize: 14,
-          }}>Free Guide</Link>
+          }}>{t("nav.cta")}</Link>
 
           {/* Language switcher */}
           <div ref={menuRef} style={{ position: "relative" }}>
@@ -120,7 +121,7 @@ export default function Nav() {
                 {languages.map((lang) => (
                   <button
                     key={lang.code}
-                    onClick={() => { setActiveLang(lang.code); setMenuOpen(false); }}
+                    onClick={() => { setLang(lang.code); setMenuOpen(false); }}
                     style={{
                       display: "flex",
                       alignItems: "center",

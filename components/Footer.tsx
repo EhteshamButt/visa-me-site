@@ -1,7 +1,10 @@
 "use client";
 import Link from "next/link";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer style={{
       background: "var(--navy-dark)",
@@ -27,10 +30,9 @@ export default function Footer() {
             }}>
               VISA<span style={{ color: "var(--gold)" }}>-</span>ME
             </div>
-            <p style={{ color: "rgba(255,255,255,0.55)", marginBottom: 16, maxWidth: 320 }}>
-              Plain-English self-help guides for U.S. visa applicants. Published by Visa-Me LLC at{" "}
-              <strong style={{ color: "var(--gold)" }}>visa-me.net</strong>.
-            </p>
+            <p style={{ color: "rgba(255,255,255,0.55)", marginBottom: 16, maxWidth: 320 }}
+              dangerouslySetInnerHTML={{ __html: t("footer.tag") }}
+            />
           </div>
 
           <div>
@@ -41,19 +43,14 @@ export default function Footer() {
               letterSpacing: 2,
               marginBottom: 16,
               fontWeight: 800,
-            }}>Guides</h5>
+            }}>{t("footer.col1")}</h5>
             <ul style={{ listStyle: "none" }}>
-              {[
-                ["Tourist (B-1/B-2)", "/#products"],
-                ["Student (F-1)", "/#products"],
-                ["Fiancé(e) (K-1)", "/#products"],
-                ["Spouse (IR/CR)", "/#products"],
-              ].map(([label, href]) => (
-                <li key={label} style={{ padding: "5px 0" }}>
-                  <Link href={href} style={{ textDecoration: "none", color: "rgba(255,255,255,0.6)", transition: "color 0.2s" }}
+              {(["footer.guide1", "footer.guide2", "footer.guide3", "footer.guide4"] as const).map((key) => (
+                <li key={key} style={{ padding: "5px 0" }}>
+                  <Link href="/#products" style={{ textDecoration: "none", color: "rgba(255,255,255,0.6)", transition: "color 0.2s" }}
                     onMouseEnter={e => (e.currentTarget.style.color = "var(--gold)")}
                     onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}>
-                    {label}
+                    {t(key)}
                   </Link>
                 </li>
               ))}
@@ -68,20 +65,19 @@ export default function Footer() {
               letterSpacing: 2,
               marginBottom: 16,
               fontWeight: 800,
-            }}>Company</h5>
+            }}>{t("footer.col2")}</h5>
             <ul style={{ listStyle: "none" }}>
-              {[
-                ["FAQ", "/#faq"],
-                ["Blog", "/blog"],
-                ["Terms of Service", "/terms"],
-                ["Privacy Policy", "/privacy"],
-                ["Contact", "/contact"],
-              ].map(([label, href]) => (
-                <li key={label} style={{ padding: "5px 0" }}>
+              {([
+                ["nav.faq", "/#faq"],
+                ["footer.terms", "/terms"],
+                ["footer.privacy", "/privacy"],
+                ["footer.contact", "/contact"],
+              ] as const).map(([key, href]) => (
+                <li key={key} style={{ padding: "5px 0" }}>
                   <Link href={href} style={{ textDecoration: "none", color: "rgba(255,255,255,0.6)" }}
                     onMouseEnter={e => (e.currentTarget.style.color = "var(--gold)")}
                     onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}>
-                    {label}
+                    {t(key)}
                   </Link>
                 </li>
               ))}
@@ -98,12 +94,7 @@ export default function Footer() {
           fontSize: 12,
           color: "rgba(255,255,255,0.65)",
           lineHeight: 1.6,
-        }}>
-          <strong style={{ color: "var(--gold)" }}>Important:</strong> Visa-Me is a publisher of educational self-help materials.
-          We are not a law firm, do not provide legal advice, and cannot guarantee any visa outcome.
-          Visa approval is at the sole discretion of U.S. consular officers. For questions about your specific situation,
-          consult a licensed immigration attorney. Always verify current fees and procedures at travel.state.gov.
-        </div>
+        }} dangerouslySetInnerHTML={{ __html: t("footer.disclaimer") }} />
 
         <div style={{
           paddingTop: 24,
@@ -115,7 +106,7 @@ export default function Footer() {
           color: "rgba(255,255,255,0.4)",
         }}>
           <div>© 2026 Visa-Me LLC · visa-me.net · All Rights Reserved</div>
-          <div>Made with care for legal immigrants worldwide</div>
+          <div>{t("footer.tagline")}</div>
         </div>
       </div>
 

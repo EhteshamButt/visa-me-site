@@ -1,7 +1,9 @@
 "use client";
 import Script from "next/script";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function LeadMagnetForm() {
+  const { t } = useLanguage();
   return (
     <>
       {/* Exact same Kit script as the original visa-me-site */}
@@ -30,7 +32,7 @@ export default function LeadMagnetForm() {
             className="formkit-input"
             type="email"
             name="email_address"
-            placeholder="Your email address"
+            placeholder={t("magnet.placeholder")}
             aria-label="Email address"
             required
           />
@@ -42,7 +44,7 @@ export default function LeadMagnetForm() {
             <div className="formkit-spinner">
               <div /><div /><div />
             </div>
-            <span>Send Me The Free Guide</span>
+            <span>{t("magnet.button")}</span>
           </button>
         </div>
         <ul
@@ -66,7 +68,7 @@ export default function LeadMagnetForm() {
         fontSize: 11, color: "var(--ink-muted)",
         textAlign: "center", marginTop: 14, lineHeight: 1.4,
       }}>
-        No spam. Unsubscribe anytime. We never sell your email.
+        {t("magnet.fineprint")}
       </p>
 
       <style>{`
