@@ -2,22 +2,12 @@
 import Script from "next/script";
 import { useLanguage } from "@/context/LanguageContext";
 
-export default function LeadMagnetForm() {
+export default function LeadMagnetForm({ inline = false }: { inline?: boolean }) {
   const { t } = useLanguage();
   return (
     <>
-      {/* Exact same Kit script as the original visa-me-site */}
-      <Script
-        src="https://f.convertkit.com/ckjs/ck.5.js"
-        strategy="afterInteractive"
-      />
+      <Script src="https://f.convertkit.com/ckjs/ck.5.js" strategy="afterInteractive" />
 
-      {/*
-        Form structure matches the original index.html exactly:
-        - Same data-sv-form, data-uid, data-format, data-version
-        - Same class names Kit needs
-        - Success div is OUTSIDE the form with id = data-uid (Kit requires this)
-      */}
       <form
         action="https://app.kit.com/forms/9481764/subscriptions"
         method="post"
@@ -25,7 +15,7 @@ export default function LeadMagnetForm() {
         data-uid="3808d012a8"
         data-format="inline"
         data-version="5"
-        className="kit-inline-form formkit-form"
+        className={`kit-inline-form formkit-form${inline ? " kit-inline-form--row" : ""}`}
       >
         <div className="input-group">
           <input
@@ -54,7 +44,6 @@ export default function LeadMagnetForm() {
         />
       </form>
 
-      {/* SUCCESS div — id must match data-uid="3808d012a8" so Kit shows it on success */}
       <div
         id="3808d012a8"
         className="formkit-alert formkit-alert-success"
@@ -64,14 +53,20 @@ export default function LeadMagnetForm() {
         Thank you for signing up.
       </div>
 
-      <p style={{
-        fontSize: 11, color: "var(--ink-muted)",
-        textAlign: "center", marginTop: 14, lineHeight: 1.4,
-      }}>
-        {t("magnet.fineprint")}
-      </p>
+      {!inline && (
+        <p style={{
+          fontSize: 11,
+          color: "var(--ink-muted)",
+          textAlign: "center",
+          marginTop: 14,
+          lineHeight: 1.4,
+        }}>
+          {t("magnet.fineprint")}
+        </p>
+      )}
 
       <style>{`
+        /* ── Shared base ── */
         .kit-inline-form .input-group {
           display: flex;
           flex-direction: column;
@@ -80,47 +75,64 @@ export default function LeadMagnetForm() {
         .kit-inline-form .formkit-input {
           width: 100%;
           padding: 14px 16px;
-          border: 2px solid var(--line);
+          border: 1.5px solid #ddd7cc;
           border-radius: 8px;
           font-family: inherit;
           font-size: 15px;
-          background: var(--cream);
+          background: white;
           outline: none;
           box-sizing: border-box;
           color: var(--ink);
+          transition: border-color 0.15s;
         }
-        .kit-inline-form .formkit-input:focus {
-          border-color: var(--navy);
-        }
+        .kit-inline-form .formkit-input:focus { border-color: var(--navy); }
+        .kit-inline-form .formkit-input::placeholder { color: #aaa; }
         .kit-inline-form .formkit-submit {
           position: relative;
           background: var(--navy);
           color: white;
           border: none;
-          padding: 14px 22px;
+          padding: 14px 24px;
           border-radius: 8px;
           font-family: inherit;
           font-size: 15px;
           font-weight: 700;
-          letter-spacing: 0.3px;
+          letter-spacing: 0.2px;
           cursor: pointer;
           width: 100%;
           display: flex;
           align-items: center;
           justify-content: center;
           gap: 8px;
+          transition: background 0.15s;
+          white-space: nowrap;
         }
-        .kit-inline-form .formkit-submit:hover {
-          background: var(--navy-light);
+        .kit-inline-form .formkit-submit:hover { background: var(--navy-light); }
+
+        /* ── Inline (row) variant ── */
+        .kit-inline-form--row .input-group {
+          flex-direction: row;
+          gap: 8px;
+          align-items: stretch;
         }
+        .kit-inline-form--row .formkit-input {
+          flex: 1;
+          min-width: 0;
+        }
+        .kit-inline-form--row .formkit-submit {
+          width: auto;
+          flex-shrink: 0;
+          font-size: 14.5px;
+          padding: 14px 22px;
+        }
+
+        /* ── Spinner ── */
         .kit-inline-form .formkit-spinner {
           display: none;
           gap: 3px;
           align-items: center;
         }
-        .kit-inline-form[data-active] .formkit-spinner {
-          display: flex;
-        }
+        .kit-inline-form[data-active] .formkit-spinner { display: flex; }
         .kit-inline-form .formkit-spinner > div {
           width: 4px; height: 4px;
           background: white;
@@ -133,6 +145,8 @@ export default function LeadMagnetForm() {
           0%, 80%, 100% { transform: scale(0); }
           40% { transform: scale(1); }
         }
+
+        /* ── Alerts ── */
         .kit-inline-form .formkit-alert-error {
           list-style: none;
           padding: 10px 14px;
@@ -144,7 +158,6 @@ export default function LeadMagnetForm() {
           color: var(--red);
         }
         .kit-inline-form .formkit-alert-error:empty { display: none; }
-        /* Success div styling */
         #3808d012a8.formkit-alert-success {
           display: none;
           margin-top: 12px;

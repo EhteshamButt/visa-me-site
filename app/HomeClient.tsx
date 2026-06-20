@@ -5,12 +5,18 @@ import LeadMagnetForm from "@/components/LeadMagnetForm";
 import { useLanguage } from "@/context/LanguageContext";
 
 const productKeys = [
-  { id: "b1", price: 39, href: "https://visame.gumroad.com/l/cijoz", featured: true },
-  { id: "f1", price: 49, href: "https://visame.gumroad.com/l/qyrszj", isNew: true },
-  { id: "k1", price: 59, href: "https://visame.gumroad.com/l/cwhux" },
-  { id: "ir", price: 59, href: "https://visame.gumroad.com/l/nwchsj" },
-  { id: "j1", price: 39, href: "https://visame.gumroad.com/l/usrnh" },
-  { id: "h1b", price: 59, href: "https://visame.gumroad.com/l/mslzx" },
+  { id: "b1", price: 39, href: "https://visame.gumroad.com/l/cijoz", featured: true,
+    img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=80" },
+  { id: "f1", price: 49, href: "https://visame.gumroad.com/l/qyrszj", isNew: true,
+    img: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80" },
+  { id: "k1", price: 59, href: "https://visame.gumroad.com/l/cwhux",
+    img: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=600&q=80" },
+  { id: "ir", price: 59, href: "https://visame.gumroad.com/l/nwchsj",
+    img: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=80" },
+  { id: "j1", price: 39, href: "https://visame.gumroad.com/l/usrnh",
+    img: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600&q=80" },
+  { id: "h1b", price: 59, href: "https://visame.gumroad.com/l/mslzx",
+    img: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80" },
 ];
 
 const languages = [
@@ -36,219 +42,160 @@ export default function HomeClient() {
   return (
     <>
       {/* ===== HERO ===== */}
-      <section id="hero" style={{
-        position: "relative",
-        minHeight: "calc(100vh - 74px)",
-        display: "flex",
-        alignItems: "center",
-        overflow: "hidden",
-        background: "#fdfbf7",
-        padding: "80px 0 100px",
-      }}>
-        {/* Background — subtle, professional */}
-        <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", overflow: "hidden" }}>
-          {/* Soft warm wash */}
+      <section id="hero" className="hero-section">
+        {/* ── Left: text + form ── */}
+        <div className="hero-left">
+          {/* Eyebrow */}
           <div style={{
-            position: "absolute", inset: 0,
-            background: "linear-gradient(160deg, #fdfbf7 0%, #f8f4ec 55%, #f3ede2 100%)",
-          }} />
-          {/* Faint right-side gold glow */}
-          <div style={{
-            position: "absolute", top: "-10%", right: "-5%",
-            width: 600, height: 600,
-            background: "radial-gradient(circle, rgba(201,169,97,0.1) 0%, transparent 60%)",
-          }} />
-          {/* Fine grid lines */}
-          <div style={{
-            position: "absolute", inset: 0,
-            backgroundImage: "linear-gradient(rgba(201,169,97,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(201,169,97,0.06) 1px, transparent 1px)",
-            backgroundSize: "48px 48px",
-            maskImage: "linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)",
-            WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)",
-          }} />
-        </div>
-
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 440px",
-          gap: 80,
-          alignItems: "center",
-          maxWidth: 1200,
-          margin: "0 auto",
-          padding: "0 40px",
-          width: "100%",
-          position: "relative",
-          zIndex: 1,
-        }}>
-          {/* Left: Text */}
-          <div>
-            {/* Eyebrow */}
-            <div className="fade-up" style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 14,
-              marginBottom: 28,
+            display: "flex",
+            alignItems: "center",
+            gap: 12,
+            marginBottom: 28,
+          }}>
+            <span style={{
+              display: "block", width: 28, height: 1.5,
+              background: "var(--gold)", borderRadius: 2, flexShrink: 0,
+            }} />
+            <span style={{
+              fontSize: 11.5, fontWeight: 800,
+              letterSpacing: "2.5px", textTransform: "uppercase",
+              color: "#A8873B",
             }}>
-              <span style={{
-                display: "block",
-                width: 32,
-                height: 1.5,
-                background: "var(--gold)",
-                borderRadius: 2,
-                flexShrink: 0,
-              }} />
-              <span style={{
-                fontSize: 12,
-                fontWeight: 700,
-                letterSpacing: "2.5px",
-                textTransform: "uppercase",
-                color: "var(--gold-dark, #A8873B)",
-              }}>
-                {t("hero.eyebrow")}
-              </span>
-            </div>
-
-            {/* Headline */}
-            <h1 className="fade-up delay-1" style={{
-              fontFamily: "var(--font-fraunces, 'Fraunces', Georgia, serif)",
-              fontSize: "clamp(44px, 6.5vw, 78px)",
-              fontWeight: 900,
-              lineHeight: 0.96,
-              letterSpacing: "-2.5px",
-              color: "var(--navy)",
-              marginBottom: 32,
-            }} dangerouslySetInnerHTML={{ __html: t("hero.title") }} />
-
-            {/* Lede */}
-            <p className="fade-up delay-2" style={{
-              fontSize: 19,
-              lineHeight: 1.65,
-              color: "var(--ink-soft)",
-              marginBottom: 40,
-              maxWidth: 520,
-            }}>
-              {t("hero.lede")}
-            </p>
-
-            {/* Stats */}
-            <div className="fade-up delay-3" style={{
-              display: "flex",
-              gap: 0,
-              paddingTop: 36,
-              borderTop: "1px solid var(--line)",
-              flexWrap: "wrap",
-            }}>
-              {[
-                { num: "185+", key: "hero.stat1" },
-                { num: "$39", key: "hero.stat2" },
-                { num: "14", key: "hero.stat3" },
-              ].map((s, i) => (
-                <div key={s.num} style={{
-                  padding: "0 40px 0 0",
-                  marginRight: 40,
-                  borderRight: i < 2 ? "1px solid var(--line)" : "none",
-                }}>
-                  <div style={{
-                    fontFamily: "var(--font-fraunces, 'Fraunces', Georgia, serif)",
-                    fontSize: 38, fontWeight: 900, color: "var(--navy)", lineHeight: 1,
-                    letterSpacing: "-1px",
-                  }}>{s.num}</div>
-                  <div style={{
-                    fontSize: 11, textTransform: "uppercase", letterSpacing: "1.5px",
-                    color: "var(--ink-muted)", marginTop: 8, fontWeight: 700,
-                  }}>{t(s.key)}</div>
-                </div>
-              ))}
-            </div>
+              {t("hero.eyebrow")}
+            </span>
           </div>
 
-          {/* Right: Lead Magnet Card */}
-          <div id="lead-magnet" className="fade-up delay-2" style={{
-            background: "white",
-            borderRadius: 16,
-            padding: "36px 32px 32px",
-            boxShadow: "0 24px 64px rgba(26,58,92,0.16), 0 4px 16px rgba(26,58,92,0.08)",
-            position: "relative",
-            border: "1px solid #eae5db",
-          }}>
-            {/* Gold top accent */}
-            <div style={{
-              position: "absolute", top: 0, left: 0, right: 0,
-              height: 3,
-              background: "linear-gradient(90deg, #C9A961 0%, #A8873B 100%)",
-              borderRadius: "16px 16px 0 0",
-            }} />
+          {/* Headline */}
+          <h1 style={{
+            fontFamily: "var(--font-fraunces, 'Fraunces', Georgia, serif)",
+            fontSize: "clamp(40px, 5.5vw, 68px)",
+            fontWeight: 900,
+            lineHeight: 1.02,
+            letterSpacing: "-2px",
+            color: "var(--navy)",
+            marginBottom: 24,
+          }} dangerouslySetInnerHTML={{ __html: t("hero.title") }} />
 
-            {/* Badge */}
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
-              <span style={{
+          {/* Lede */}
+          <p style={{
+            fontSize: 17.5,
+            lineHeight: 1.7,
+            color: "var(--ink-soft)",
+            marginBottom: 36,
+            maxWidth: 500,
+          }}>
+            {t("hero.lede")}
+          </p>
+
+          {/* Inline form */}
+          <div id="lead-magnet" style={{ marginBottom: 20 }}>
+            <LeadMagnetForm inline />
+          </div>
+
+          {/* Trust marks */}
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 20,
+            flexWrap: "wrap",
+          }}>
+            {["No spam", "Instant download", "7 languages"].map((label) => (
+              <span key={label} style={{
                 display: "inline-flex",
                 alignItems: "center",
-                gap: 7,
-                background: "rgba(26,58,92,0.06)",
-                color: "var(--navy)",
-                padding: "5px 12px",
-                borderRadius: 6,
-                fontSize: 10,
-                fontWeight: 800,
-                letterSpacing: "2px",
-                textTransform: "uppercase",
-                border: "1px solid rgba(26,58,92,0.1)",
-              }}>
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
-                </svg>
-                {t("magnet.badge")}
-              </span>
-              <span style={{
-                fontSize: 10,
-                fontWeight: 700,
+                gap: 6,
+                fontSize: 12.5,
                 color: "var(--ink-muted)",
-                letterSpacing: "1px",
-                textTransform: "uppercase",
-              }}>No card required</span>
+                fontWeight: 600,
+              }}>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2.5" strokeLinecap="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                {label}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* ── Right: full-bleed photo ── */}
+        <div className="hero-image-col">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1000&q=85"
+            alt="Travel"
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              objectPosition: "center",
+              display: "block",
+            }}
+          />
+          {/* Overlay gradient */}
+          <div style={{
+            position: "absolute", inset: 0,
+            background: "linear-gradient(to right, rgba(26,58,92,0.18) 0%, transparent 40%)",
+            pointerEvents: "none",
+          }} />
+          {/* "Updated for 2026" badge */}
+          <div style={{
+            position: "absolute",
+            bottom: 28,
+            left: 28,
+            background: "white",
+            borderRadius: 12,
+            padding: "14px 18px",
+            boxShadow: "0 8px 32px rgba(0,0,0,0.18)",
+            display: "flex",
+            alignItems: "center",
+            gap: 14,
+            maxWidth: 270,
+          }}>
+            <div style={{
+              width: 40, height: 40, borderRadius: "50%",
+              background: "linear-gradient(135deg, #C9A961 0%, #A8873B 100%)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              flexShrink: 0,
+            }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
             </div>
-
-            <h3 style={{
-              fontFamily: "var(--font-fraunces, 'Fraunces', Georgia, serif)",
-              fontSize: 26, fontWeight: 900, lineHeight: 1.15,
-              color: "var(--navy)", marginBottom: 10, letterSpacing: "-0.5px",
-            }}>{t("magnet.title")}</h3>
-
-            <p style={{ color: "var(--ink-soft)", fontSize: 14, marginBottom: 22, lineHeight: 1.6 }}>
-              {t("magnet.desc")}
-            </p>
-
-            <ul style={{ listStyle: "none", marginBottom: 26 }}>
-              {(["magnet.feat1", "magnet.feat2", "magnet.feat3"] as const).map((key) => (
-                <li key={key} style={{
-                  fontSize: 14, padding: "8px 0",
-                  display: "flex", alignItems: "flex-start", gap: 12,
-                  color: "var(--ink-soft)",
-                  borderBottom: "1px solid var(--line-soft, #ede8de)",
-                }}>
-                  <span style={{
-                    width: 20, height: 20, background: "linear-gradient(135deg, var(--gold), var(--gold-dark, #A8873B))",
-                    borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center",
-                    flexShrink: 0, marginTop: 1,
-                  }}>
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                      <polyline points="20 6 9 17 4 12"/>
-                    </svg>
-                  </span>
-                  <span>{t(key)}</span>
-                </li>
-              ))}
-            </ul>
-            <LeadMagnetForm />
+            <div>
+              <div style={{ fontWeight: 800, color: "var(--navy)", fontSize: 13.5, lineHeight: 1.2 }}>
+                Updated for 2026
+              </div>
+              <div style={{ fontSize: 11.5, color: "var(--ink-muted)", marginTop: 2, lineHeight: 1.4 }}>
+                Includes the new $250 Integrity Fee
+              </div>
+            </div>
           </div>
         </div>
 
         <style>{`
-          @media (max-width: 960px) {
-            #hero > div > div:first-of-type { grid-template-columns: 1fr !important; }
+          .hero-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: calc(100vh - 74px);
+            overflow: hidden;
           }
-          h1 em { font-style: italic; color: var(--gold); font-weight: 700; }
+          .hero-left {
+            background: #faf8f4;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 80px 64px 80px 80px;
+          }
+          .hero-image-col {
+            position: relative;
+            overflow: hidden;
+          }
+          h1 em { font-style: italic; color: var(--gold); font-weight: 800; }
+          @media (max-width: 900px) {
+            .hero-section { grid-template-columns: 1fr !important; }
+            .hero-left { padding: 60px 32px !important; }
+            .hero-image-col { min-height: 320px; }
+          }
         `}</style>
       </section>
 
@@ -364,7 +311,6 @@ export default function HomeClient() {
                   : "white",
                 border: p.isNew ? "2px solid var(--navy)" : "1px solid var(--line)",
                 borderRadius: 16,
-                padding: "32px 28px",
                 display: "flex",
                 flexDirection: "column",
                 position: "relative",
@@ -387,114 +333,134 @@ export default function HomeClient() {
                     : "var(--shadow-sm)";
                 }}
               >
-                {/* Decorative dot pattern for featured */}
-                {p.featured && (
-                  <div aria-hidden style={{
-                    position: "absolute", top: -20, right: -20,
-                    width: 140, height: 140,
-                    background: "radial-gradient(circle, rgba(201,169,97,0.2) 0%, transparent 70%)",
-                    pointerEvents: "none",
-                  }} />
-                )}
-
-                {/* Badge */}
-                {p.featured && (
-                  <div style={{ marginBottom: 20 }}>
-                    <span style={{
-                      background: "linear-gradient(135deg, var(--gold) 0%, var(--gold-dark, #A8873B) 100%)",
-                      color: "var(--navy-dark)",
-                      fontSize: 10, fontWeight: 800, letterSpacing: "2px",
-                      textTransform: "uppercase", padding: "5px 12px", borderRadius: 100,
-                    }}>★ Most Popular</span>
-                  </div>
-                )}
-                {p.isNew && (
-                  <div style={{ marginBottom: 20 }}>
-                    <span style={{
-                      background: "rgba(26,58,92,0.08)",
-                      color: "var(--navy)",
-                      border: "1.5px solid rgba(26,58,92,0.2)",
-                      fontSize: 10, fontWeight: 800, letterSpacing: "2px",
-                      textTransform: "uppercase", padding: "5px 12px", borderRadius: 100,
-                    }}>✦ New</span>
-                  </div>
-                )}
-
-                <div style={{
-                  fontSize: 11, fontWeight: 800, letterSpacing: "2px",
-                  textTransform: "uppercase",
-                  color: p.featured ? "var(--gold-light)" : "var(--gold-dark, #A8873B)",
-                  marginBottom: 10,
-                }}>
-                  {t(`products.${p.id}.tag`)}
+                {/* Card image */}
+                <div style={{ position: "relative", height: 180, flexShrink: 0, overflow: "hidden" }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={p.img}
+                    alt=""
+                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                  />
+                  {p.featured && (
+                    <div style={{
+                      position: "absolute", inset: 0,
+                      background: "linear-gradient(to bottom, rgba(6,20,42,0.3) 0%, rgba(14,35,60,0.72) 100%)",
+                      pointerEvents: "none",
+                    }} />
+                  )}
                 </div>
 
-                <h3 style={{
-                  fontFamily: "var(--font-fraunces, 'Fraunces', Georgia, serif)",
-                  fontSize: 22, fontWeight: 900,
-                  color: p.featured ? "white" : "var(--navy)",
-                  marginBottom: 10, letterSpacing: "-0.5px", lineHeight: 1.2,
-                }}>{t(`products.${p.id}.name`)}</h3>
+                {/* Card content */}
+                <div style={{ padding: "28px 28px 32px", display: "flex", flexDirection: "column", flexGrow: 1, position: "relative" }}>
+                  {/* Decorative dot pattern for featured */}
+                  {p.featured && (
+                    <div aria-hidden style={{
+                      position: "absolute", top: -20, right: -20,
+                      width: 140, height: 140,
+                      background: "radial-gradient(circle, rgba(201,169,97,0.2) 0%, transparent 70%)",
+                      pointerEvents: "none",
+                    }} />
+                  )}
 
-                <p style={{
-                  fontSize: 14, lineHeight: 1.65,
-                  color: p.featured ? "rgba(255,255,255,0.72)" : "var(--ink-soft)",
-                  marginBottom: 24, flexGrow: 1,
-                }}>{t(`products.${p.id}.desc`)}</p>
+                  {/* Badge */}
+                  {p.featured && (
+                    <div style={{ marginBottom: 20 }}>
+                      <span style={{
+                        background: "linear-gradient(135deg, var(--gold) 0%, var(--gold-dark, #A8873B) 100%)",
+                        color: "var(--navy-dark)",
+                        fontSize: 10, fontWeight: 800, letterSpacing: "2px",
+                        textTransform: "uppercase", padding: "5px 12px", borderRadius: 100,
+                      }}>★ Most Popular</span>
+                    </div>
+                  )}
+                  {p.isNew && (
+                    <div style={{ marginBottom: 20 }}>
+                      <span style={{
+                        background: "rgba(26,58,92,0.08)",
+                        color: "var(--navy)",
+                        border: "1.5px solid rgba(26,58,92,0.2)",
+                        fontSize: 10, fontWeight: 800, letterSpacing: "2px",
+                        textTransform: "uppercase", padding: "5px 12px", borderRadius: 100,
+                      }}>✦ New</span>
+                    </div>
+                  )}
 
-                <div style={{
-                  display: "flex", alignItems: "center", justifyContent: "space-between",
-                  paddingTop: 20,
-                  borderTop: p.featured ? "1px solid rgba(255,255,255,0.15)" : "1px solid var(--line)",
-                  marginBottom: 20,
-                }}>
-                  <div>
-                    <span style={{
-                      fontFamily: "var(--font-fraunces, 'Fraunces', Georgia, serif)",
-                      fontSize: 36, fontWeight: 900,
-                      color: p.featured ? "white" : "var(--navy)",
-                      letterSpacing: "-1px",
-                    }}>
-                      <span style={{ fontSize: 20, verticalAlign: "top", marginTop: 6, display: "inline-block" }}>$</span>{p.price}
-                    </span>
-                  </div>
                   <div style={{
-                    fontSize: 11, fontWeight: 700, letterSpacing: "1.5px",
+                    fontSize: 11, fontWeight: 800, letterSpacing: "2px",
                     textTransform: "uppercase",
-                    color: p.featured ? "rgba(255,255,255,0.5)" : "var(--ink-muted)",
-                  }}>PDF · Instant</div>
-                </div>
+                    color: p.featured ? "var(--gold-light)" : "var(--gold-dark, #A8873B)",
+                    marginBottom: 10,
+                  }}>
+                    {t(`products.${p.id}.tag`)}
+                  </div>
 
-                <a href={p.href} target="_blank" rel="noopener noreferrer" style={{
-                  display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-                  background: p.featured
-                    ? "linear-gradient(135deg, var(--gold) 0%, var(--gold-dark, #A8873B) 100%)"
-                    : "var(--navy)",
-                  color: p.featured ? "var(--navy-dark)" : "white",
-                  padding: "14px 20px",
-                  borderRadius: 10,
-                  textDecoration: "none",
-                  fontWeight: 800, fontSize: 14,
-                  letterSpacing: "0.3px",
-                  boxShadow: p.featured ? "0 4px 16px rgba(201,169,97,0.4)" : "none",
-                  transition: "transform 0.18s, box-shadow 0.18s",
-                }}
-                  onMouseEnter={e => {
-                    (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-1px)";
-                    (e.currentTarget as HTMLAnchorElement).style.boxShadow = p.featured
-                      ? "0 8px 24px rgba(201,169,97,0.55)"
-                      : "0 6px 20px rgba(26,58,92,0.35)";
+                  <h3 style={{
+                    fontFamily: "var(--font-fraunces, 'Fraunces', Georgia, serif)",
+                    fontSize: 22, fontWeight: 900,
+                    color: p.featured ? "white" : "var(--navy)",
+                    marginBottom: 10, letterSpacing: "-0.5px", lineHeight: 1.2,
+                  }}>{t(`products.${p.id}.name`)}</h3>
+
+                  <p style={{
+                    fontSize: 14, lineHeight: 1.65,
+                    color: p.featured ? "rgba(255,255,255,0.72)" : "var(--ink-soft)",
+                    marginBottom: 24, flexGrow: 1,
+                  }}>{t(`products.${p.id}.desc`)}</p>
+
+                  <div style={{
+                    display: "flex", alignItems: "center", justifyContent: "space-between",
+                    paddingTop: 20,
+                    borderTop: p.featured ? "1px solid rgba(255,255,255,0.15)" : "1px solid var(--line)",
+                    marginBottom: 20,
+                  }}>
+                    <div>
+                      <span style={{
+                        fontFamily: "var(--font-fraunces, 'Fraunces', Georgia, serif)",
+                        fontSize: 36, fontWeight: 900,
+                        color: p.featured ? "white" : "var(--navy)",
+                        letterSpacing: "-1px",
+                      }}>
+                        <span style={{ fontSize: 20, verticalAlign: "top", marginTop: 6, display: "inline-block" }}>$</span>{p.price}
+                      </span>
+                    </div>
+                    <div style={{
+                      fontSize: 11, fontWeight: 700, letterSpacing: "1.5px",
+                      textTransform: "uppercase",
+                      color: p.featured ? "rgba(255,255,255,0.5)" : "var(--ink-muted)",
+                    }}>PDF · Instant</div>
+                  </div>
+
+                  <a href={p.href} target="_blank" rel="noopener noreferrer" style={{
+                    display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+                    background: p.featured
+                      ? "linear-gradient(135deg, var(--gold) 0%, var(--gold-dark, #A8873B) 100%)"
+                      : "var(--navy)",
+                    color: p.featured ? "var(--navy-dark)" : "white",
+                    padding: "14px 20px",
+                    borderRadius: 10,
+                    textDecoration: "none",
+                    fontWeight: 800, fontSize: 14,
+                    letterSpacing: "0.3px",
+                    boxShadow: p.featured ? "0 4px 16px rgba(201,169,97,0.4)" : "none",
+                    transition: "transform 0.18s, box-shadow 0.18s",
                   }}
-                  onMouseLeave={e => {
-                    (e.currentTarget as HTMLAnchorElement).style.transform = "none";
-                    (e.currentTarget as HTMLAnchorElement).style.boxShadow = p.featured ? "0 4px 16px rgba(201,169,97,0.4)" : "none";
-                  }}
-                >
-                  Get The Guide
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-                  </svg>
-                </a>
+                    onMouseEnter={e => {
+                      (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-1px)";
+                      (e.currentTarget as HTMLAnchorElement).style.boxShadow = p.featured
+                        ? "0 8px 24px rgba(201,169,97,0.55)"
+                        : "0 6px 20px rgba(26,58,92,0.35)";
+                    }}
+                    onMouseLeave={e => {
+                      (e.currentTarget as HTMLAnchorElement).style.transform = "none";
+                      (e.currentTarget as HTMLAnchorElement).style.boxShadow = p.featured ? "0 4px 16px rgba(201,169,97,0.4)" : "none";
+                    }}
+                  >
+                    Get The Guide
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                    </svg>
+                  </a>
+                </div>
               </div>
             ))}
           </div>
