@@ -46,45 +46,6 @@ export default function Nav() {
 
   return (
     <>
-      {/* ── Announcement Bar ── */}
-      <div style={{
-        background: "var(--navy-dark)",
-        color: "rgba(255,255,255,0.82)",
-        fontSize: 12,
-        fontWeight: 600,
-        letterSpacing: "0.2px",
-        textAlign: "center",
-        padding: "9px 20px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: 20,
-      }}>
-        <span style={{ display: "flex", alignItems: "center", gap: 7 }}>
-          <span style={{
-            display: "inline-block",
-            width: 6, height: 6,
-            background: "var(--gold)",
-            borderRadius: "50%",
-          }} />
-          Updated for 2026 · All fee changes included
-        </span>
-        <span style={{ color: "rgba(255,255,255,0.25)" }}>|</span>
-        <Link href="/#lead-magnet" style={{
-          color: "var(--gold)",
-          textDecoration: "none",
-          fontWeight: 700,
-          display: "inline-flex",
-          alignItems: "center",
-          gap: 5,
-        }}>
-          Free Quick-Start Guide
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-          </svg>
-        </Link>
-      </div>
-
       {/* ── Main Nav ── */}
       <nav style={{
         position: "sticky",
