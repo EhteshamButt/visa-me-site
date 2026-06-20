@@ -13,7 +13,7 @@ type QuizStep = {
   questionKey: string;
   subKey: string;
   progress: number;
-  options: { labelKey: string; next: StepKey }[];
+  options: { labelKey: string; next: StepKey; emoji?: string }[];
 } | {
   type: "r";
   icon: string;
@@ -30,10 +30,10 @@ const quizFlow: Record<StepKey, QuizStep> = {
     subKey: "quiz.subQ1",
     progress: 0,
     options: [
-      { labelKey: "quiz.opt.tourism", next: "duration" },
-      { labelKey: "quiz.opt.study", next: "student-result" },
-      { labelKey: "quiz.opt.marriage", next: "marriage-type" },
-      { labelKey: "quiz.opt.work", next: "work-type" },
+      { labelKey: "quiz.opt.tourism", next: "duration", emoji: "✈️" },
+      { labelKey: "quiz.opt.study", next: "student-result", emoji: "🎓" },
+      { labelKey: "quiz.opt.marriage", next: "marriage-type", emoji: "💍" },
+      { labelKey: "quiz.opt.work", next: "work-type", emoji: "💼" },
     ],
   },
   duration: {
@@ -42,9 +42,9 @@ const quizFlow: Record<StepKey, QuizStep> = {
     subKey: "quiz.subQ2",
     progress: 1,
     options: [
-      { labelKey: "quiz.opt.short", next: "tourist-money" },
-      { labelKey: "quiz.opt.long", next: "long-stay" },
-      { labelKey: "quiz.opt.unsure", next: "tourist-money" },
+      { labelKey: "quiz.opt.short", next: "tourist-money", emoji: "📅" },
+      { labelKey: "quiz.opt.long", next: "long-stay", emoji: "🗓️" },
+      { labelKey: "quiz.opt.unsure", next: "tourist-money", emoji: "🤔" },
     ],
   },
   "tourist-money": {
@@ -53,9 +53,9 @@ const quizFlow: Record<StepKey, QuizStep> = {
     subKey: "quiz.subQ3",
     progress: 2,
     options: [
-      { labelKey: "quiz.opt.payself", next: "tourist-result" },
-      { labelKey: "quiz.opt.paysponsor", next: "tourist-result" },
-      { labelKey: "quiz.opt.paywork", next: "tourist-business-result" },
+      { labelKey: "quiz.opt.payself", next: "tourist-result", emoji: "💰" },
+      { labelKey: "quiz.opt.paysponsor", next: "tourist-result", emoji: "🤝" },
+      { labelKey: "quiz.opt.paywork", next: "tourist-business-result", emoji: "🏢" },
     ],
   },
   "marriage-type": {
@@ -64,9 +64,9 @@ const quizFlow: Record<StepKey, QuizStep> = {
     subKey: "quiz.subQ2",
     progress: 1,
     options: [
-      { labelKey: "quiz.opt.married", next: "spouse-result" },
-      { labelKey: "quiz.opt.fiance", next: "fiance-result" },
-      { labelKey: "quiz.opt.dating", next: "tourist-result" },
+      { labelKey: "quiz.opt.married", next: "spouse-result", emoji: "💑" },
+      { labelKey: "quiz.opt.fiance", next: "fiance-result", emoji: "💌" },
+      { labelKey: "quiz.opt.dating", next: "tourist-result", emoji: "🌹" },
     ],
   },
   "work-type": {
@@ -75,15 +75,15 @@ const quizFlow: Record<StepKey, QuizStep> = {
     subKey: "quiz.subQ2",
     progress: 1,
     options: [
-      { labelKey: "quiz.opt.h1b", next: "h1b-result" },
-      { labelKey: "quiz.opt.l1", next: "l1-result" },
-      { labelKey: "quiz.opt.b1", next: "b1-result" },
-      { labelKey: "quiz.opt.workother", next: "work-other-result" },
+      { labelKey: "quiz.opt.h1b", next: "h1b-result", emoji: "🔬" },
+      { labelKey: "quiz.opt.l1", next: "l1-result", emoji: "🌐" },
+      { labelKey: "quiz.opt.b1", next: "b1-result", emoji: "📊" },
+      { labelKey: "quiz.opt.workother", next: "work-other-result", emoji: "❓" },
     ],
   },
   "tourist-result": {
     type: "r",
-    icon: "B",
+    icon: "B-2",
     titleKey: "quiz.result.tourist.title",
     bodyKey: "quiz.result.tourist.body",
     primary: { labelKey: "quiz.result.cta.guide", target: "#products" },
@@ -189,11 +189,11 @@ const fallbackEn: Record<string, string> = {
 export default function Quiz() {
   const [history, setHistory] = useState<StepKey[]>([]);
   const [current, setCurrent] = useState<StepKey>("start");
+  const [hoveredOpt, setHoveredOpt] = useState<string | null>(null);
   const { t } = useLanguage();
 
   function tWithFallback(key: string): string {
     const translated = t(key);
-    // If t() returned the key itself (no translation found), use fallback
     if (translated === key && fallbackEn[key]) return fallbackEn[key];
     return translated;
   }
@@ -218,105 +218,329 @@ export default function Quiz() {
   }
 
   if (step.type === "q") {
-    const dots = [0, 1, 2].map((i) => {
-      if (i < step.progress) return "done";
-      if (i === step.progress) return "active";
-      return "";
-    });
+    const totalSteps = 3;
+    const progressPct = ((step.progress) / totalSteps) * 100;
 
     return (
       <div>
-        <div style={{ display: "flex", gap: 6, marginBottom: 28 }}>
-          {dots.map((state, i) => (
-            <div key={i} style={{
-              flex: 1, height: 4, borderRadius: 2,
-              background: state === "done" ? "var(--navy)" : state === "active" ? "var(--gold)" : "var(--line)",
-              transition: "background 0.4s",
+        {/* Progress bar */}
+        <div style={{ marginBottom: 28 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+            <span style={{ fontSize: 12, fontWeight: 700, color: "var(--ink-muted)", letterSpacing: "0.5px", textTransform: "uppercase" }}>
+              Step {step.progress + 1} of {totalSteps}
+            </span>
+            <span style={{ fontSize: 12, fontWeight: 600, color: "var(--gold)" }}>{Math.round((step.progress / totalSteps) * 100)}% complete</span>
+          </div>
+          <div style={{
+            height: 6,
+            background: "var(--line)",
+            borderRadius: 99,
+            overflow: "hidden",
+          }}>
+            <div style={{
+              height: "100%",
+              width: `${progressPct}%`,
+              background: "linear-gradient(90deg, var(--navy), var(--gold))",
+              borderRadius: 99,
+              transition: "width 0.5s cubic-bezier(0.4,0,0.2,1)",
             }} />
-          ))}
+          </div>
         </div>
 
-        <div style={{ color: "var(--ink-muted)", fontSize: 14, marginBottom: 8 }}>{tWithFallback(step.subKey)}</div>
+        {/* Sub label */}
+        <div style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 6,
+          background: "rgba(201,169,97,0.1)",
+          border: "1px solid rgba(201,169,97,0.25)",
+          borderRadius: 99,
+          padding: "4px 12px",
+          fontSize: 12,
+          fontWeight: 700,
+          color: "var(--gold)",
+          letterSpacing: "0.3px",
+          marginBottom: 16,
+        }}>
+          <span>●</span>
+          <span>{tWithFallback(step.subKey)}</span>
+        </div>
+
+        {/* Question */}
         <div style={{
           fontFamily: "var(--font-fraunces, 'Fraunces', Georgia, serif)",
-          fontSize: 28, fontWeight: 800, lineHeight: 1.2,
-          color: "var(--navy)", marginBottom: 28, letterSpacing: "-0.5px",
-        }}>{tWithFallback(step.questionKey)}</div>
-
-        <div style={{ display: "grid", gap: 12, marginBottom: 32 }}>
-          {step.options.map((opt) => (
-            <button key={opt.next} onClick={() => goTo(opt.next)} style={{
-              background: "var(--cream)", border: "2px solid transparent",
-              padding: "18px 22px", borderRadius: 10, textAlign: "left",
-              cursor: "pointer", fontFamily: "inherit", fontSize: 15,
-              fontWeight: 600, color: "var(--ink)",
-              display: "flex", alignItems: "center", justifyContent: "space-between",
-              gap: 12, transition: "all 0.15s",
-            }}
-            onMouseEnter={e => {
-              (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--gold)";
-              (e.currentTarget as HTMLButtonElement).style.background = "white";
-              (e.currentTarget as HTMLButtonElement).style.transform = "translateX(4px)";
-            }}
-            onMouseLeave={e => {
-              (e.currentTarget as HTMLButtonElement).style.borderColor = "transparent";
-              (e.currentTarget as HTMLButtonElement).style.background = "var(--cream)";
-              (e.currentTarget as HTMLButtonElement).style.transform = "none";
-            }}>
-              <span>{tWithFallback(opt.labelKey)}</span>
-              <span style={{ color: "var(--ink-muted)", fontSize: 18 }}>→</span>
-            </button>
-          ))}
+          fontSize: "clamp(22px, 4vw, 30px)",
+          fontWeight: 800,
+          lineHeight: 1.25,
+          color: "var(--navy)",
+          marginBottom: 28,
+          letterSpacing: "-0.5px",
+        }}>
+          {tWithFallback(step.questionKey)}
         </div>
 
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 13, color: "var(--ink-muted)" }}>
-          <button onClick={goBack} disabled={history.length === 0} style={{
-            background: "none", border: "none", fontFamily: "inherit", fontSize: 13,
-            color: "var(--ink-muted)", cursor: history.length === 0 ? "default" : "pointer",
-            padding: "6px 0", fontWeight: 600, opacity: history.length === 0 ? 0 : 1,
-          }}>{tWithFallback("quiz.back")}</button>
-          <span>{tWithFallback(step.subKey)}</span>
+        {/* Options */}
+        <div style={{ display: "grid", gap: 10, marginBottom: 28 }}>
+          {step.options.map((opt) => {
+            const isHovered = hoveredOpt === opt.next;
+            return (
+              <button
+                key={opt.next}
+                onClick={() => goTo(opt.next)}
+                onMouseEnter={() => setHoveredOpt(opt.next)}
+                onMouseLeave={() => setHoveredOpt(null)}
+                style={{
+                  background: isHovered ? "white" : "rgba(250,247,242,0.8)",
+                  border: isHovered ? "2px solid var(--gold)" : "2px solid var(--line)",
+                  padding: "16px 20px",
+                  borderRadius: 12,
+                  textAlign: "left",
+                  cursor: "pointer",
+                  fontFamily: "inherit",
+                  fontSize: 15,
+                  fontWeight: 600,
+                  color: isHovered ? "var(--navy)" : "var(--ink)",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 14,
+                  transition: "all 0.18s ease",
+                  transform: isHovered ? "translateX(4px)" : "none",
+                  boxShadow: isHovered ? "0 4px 16px rgba(201,169,97,0.15)" : "none",
+                }}
+              >
+                {opt.emoji && (
+                  <span style={{
+                    width: 36,
+                    height: 36,
+                    flexShrink: 0,
+                    borderRadius: "50%",
+                    background: isHovered ? "rgba(201,169,97,0.12)" : "var(--bg-warm)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: 17,
+                    transition: "background 0.18s",
+                  }}>
+                    {opt.emoji}
+                  </span>
+                )}
+                <span style={{ flex: 1 }}>{tWithFallback(opt.labelKey)}</span>
+                <svg
+                  width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke={isHovered ? "var(--gold)" : "var(--ink-muted)"}
+                  strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                  style={{ flexShrink: 0, transition: "stroke 0.18s, transform 0.18s", transform: isHovered ? "translateX(2px)" : "none" }}
+                >
+                  <line x1="5" y1="12" x2="19" y2="12"/>
+                  <polyline points="12 5 19 12 12 19"/>
+                </svg>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Back button */}
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <button
+            onClick={goBack}
+            disabled={history.length === 0}
+            style={{
+              background: "none",
+              border: "none",
+              fontFamily: "inherit",
+              fontSize: 13,
+              color: "var(--ink-muted)",
+              cursor: history.length === 0 ? "default" : "pointer",
+              padding: "6px 0",
+              fontWeight: 600,
+              opacity: history.length === 0 ? 0 : 1,
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+              transition: "color 0.15s",
+            }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+              <line x1="19" y1="12" x2="5" y2="12"/>
+              <polyline points="12 19 5 12 12 5"/>
+            </svg>
+            {tWithFallback("quiz.back")}
+          </button>
         </div>
       </div>
     );
   }
 
+  // Result screen
   return (
-    <div style={{ textAlign: "center", padding: "12px 0" }}>
+    <div style={{ textAlign: "center", padding: "8px 0 4px" }}>
+      {/* Visa badge */}
       <div style={{
-        width: 72, height: 72, borderRadius: "50%",
-        background: "linear-gradient(135deg, var(--navy), var(--navy-light))",
-        display: "flex", alignItems: "center", justifyContent: "center",
-        margin: "0 auto 20px",
-        color: "var(--gold)",
-        fontFamily: "var(--font-fraunces, 'Fraunces', Georgia, serif)",
-        fontWeight: 900, fontSize: 22,
-      }}>{step.icon}</div>
+        display: "inline-flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        width: 88,
+        height: 88,
+        borderRadius: "50%",
+        background: "linear-gradient(135deg, var(--navy) 0%, #2a4a70 100%)",
+        boxShadow: "0 8px 32px rgba(26,58,92,0.25), 0 0 0 6px rgba(201,169,97,0.12)",
+        margin: "0 auto 24px",
+      }}>
+        <span style={{
+          color: "var(--gold)",
+          fontFamily: "var(--font-fraunces, 'Fraunces', Georgia, serif)",
+          fontWeight: 900,
+          fontSize: step.icon.length > 3 ? 15 : 20,
+          letterSpacing: "-0.5px",
+          lineHeight: 1,
+        }}>
+          {step.icon}
+        </span>
+        <span style={{ fontSize: 10, color: "rgba(255,255,255,0.5)", fontWeight: 600, letterSpacing: "1px", marginTop: 3 }}>VISA</span>
+      </div>
+
+      {/* Match label */}
+      <div style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 6,
+        background: "rgba(45,106,79,0.08)",
+        border: "1px solid rgba(45,106,79,0.2)",
+        borderRadius: 99,
+        padding: "4px 14px",
+        fontSize: 12,
+        fontWeight: 700,
+        color: "#2d6a4f",
+        letterSpacing: "0.3px",
+        marginBottom: 16,
+      }}>
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        Your best match
+      </div>
+
       <h3 style={{
         fontFamily: "var(--font-fraunces, 'Fraunces', Georgia, serif)",
-        fontSize: 32, fontWeight: 800, color: "var(--navy)", marginBottom: 12, letterSpacing: "-0.5px",
-      }}>{tWithFallback(step.titleKey)}</h3>
-      <p style={{ color: "var(--ink-soft)", fontSize: 16, maxWidth: 440, margin: "0 auto 28px", lineHeight: 1.55 }}>
+        fontSize: "clamp(24px, 4vw, 34px)",
+        fontWeight: 800,
+        color: "var(--navy)",
+        marginBottom: 14,
+        letterSpacing: "-0.5px",
+        lineHeight: 1.2,
+      }}>
+        {tWithFallback(step.titleKey)}
+      </h3>
+
+      <p style={{
+        color: "var(--ink-soft)",
+        fontSize: 15.5,
+        maxWidth: 460,
+        margin: "0 auto 32px",
+        lineHeight: 1.65,
+      }}>
         {tWithFallback(step.bodyKey)}
       </p>
-      <div>
-        <a href={step.primary.target} style={{
-          display: "inline-block", background: "var(--navy)", color: "white",
-          padding: "14px 28px", borderRadius: 8, textDecoration: "none",
-          fontWeight: 700, margin: "0 6px 8px", transition: "background 0.2s",
-        }}>{tWithFallback(step.primary.labelKey)}</a>
+
+      {/* CTA buttons */}
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 10, justifyContent: "center", marginBottom: 24 }}>
+        <a
+          href={step.primary.target}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8,
+            background: "linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%)",
+            color: "white",
+            padding: "13px 28px",
+            borderRadius: 10,
+            textDecoration: "none",
+            fontWeight: 700,
+            fontSize: 15,
+            boxShadow: "0 4px 16px rgba(26,58,92,0.25)",
+            transition: "transform 0.18s, box-shadow 0.18s",
+          }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-2px)";
+            (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 8px 24px rgba(26,58,92,0.3)";
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLAnchorElement).style.transform = "none";
+            (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 4px 16px rgba(26,58,92,0.25)";
+          }}
+        >
+          {tWithFallback(step.primary.labelKey)}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+
         {step.secondary && (
-          <a href={step.secondary.target} style={{
-            display: "inline-block", background: "transparent", color: "var(--navy)",
-            border: "2px solid var(--navy)", padding: "14px 28px", borderRadius: 8,
-            textDecoration: "none", fontWeight: 700, margin: "0 6px 8px",
-          }}>{tWithFallback(step.secondary.labelKey)}</a>
+          <a
+            href={step.secondary.target}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              background: "transparent",
+              color: "var(--navy)",
+              border: "2px solid var(--navy)",
+              padding: "13px 28px",
+              borderRadius: 10,
+              textDecoration: "none",
+              fontWeight: 700,
+              fontSize: 15,
+              transition: "background 0.18s, color 0.18s",
+            }}
+            onMouseEnter={e => {
+              (e.currentTarget as HTMLAnchorElement).style.background = "var(--navy)";
+              (e.currentTarget as HTMLAnchorElement).style.color = "white";
+            }}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLAnchorElement).style.background = "transparent";
+              (e.currentTarget as HTMLAnchorElement).style.color = "var(--navy)";
+            }}
+          >
+            {tWithFallback(step.secondary.labelKey)}
+          </a>
         )}
       </div>
-      <button onClick={restart} style={{
-        background: "none", border: "none", color: "var(--ink-muted)", fontFamily: "inherit",
-        fontSize: 13, marginTop: 20, cursor: "pointer", textDecoration: "underline",
-      }}>{tWithFallback("quiz.restart")}</button>
+
+      <button
+        onClick={restart}
+        style={{
+          background: "none",
+          border: "none",
+          color: "var(--ink-muted)",
+          fontFamily: "inherit",
+          fontSize: 13,
+          marginTop: 4,
+          cursor: "pointer",
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 6,
+          fontWeight: 600,
+          padding: "6px 10px",
+          borderRadius: 6,
+          transition: "color 0.15s, background 0.15s",
+        }}
+        onMouseEnter={e => {
+          (e.currentTarget as HTMLButtonElement).style.color = "var(--navy)";
+          (e.currentTarget as HTMLButtonElement).style.background = "var(--bg-warm)";
+        }}
+        onMouseLeave={e => {
+          (e.currentTarget as HTMLButtonElement).style.color = "var(--ink-muted)";
+          (e.currentTarget as HTMLButtonElement).style.background = "transparent";
+        }}
+      >
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+          <polyline points="1 4 1 10 7 10"/>
+          <path d="M3.51 15a9 9 0 1 0 .49-3.18"/>
+        </svg>
+        {tWithFallback("quiz.restart")}
+      </button>
     </div>
   );
 }
