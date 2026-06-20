@@ -54,9 +54,10 @@ export default function Nav() {
         background: "rgba(255,255,255,0.98)",
         backdropFilter: "blur(20px)",
         WebkitBackdropFilter: "blur(20px)",
-        borderBottom: scrolled ? "1px solid #e8e2d8" : "1px solid #f0ebe2",
+        borderTop: "2px solid var(--gold)",
+        borderBottom: scrolled ? "1px solid #e8e2d8" : "1px solid transparent",
         boxShadow: scrolled
-          ? "0 1px 0 rgba(201,169,97,0.15), 0 4px 24px rgba(26,58,92,0.09)"
+          ? "0 4px 24px rgba(26,58,92,0.08)"
           : "none",
         transition: "box-shadow 0.3s ease, border-color 0.3s ease",
       }}>
@@ -71,45 +72,27 @@ export default function Nav() {
         }}>
 
           {/* Logo */}
-          <Link href="/" style={{ textDecoration: "none", flexShrink: 0, display: "flex", alignItems: "center", gap: 10 }}>
-            <div style={{
-              width: 34,
-              height: 34,
-              background: "var(--navy)",
-              borderRadius: 8,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+          <Link href="/" style={{ textDecoration: "none", flexShrink: 0, display: "flex", alignItems: "center", gap: 0 }}>
+            {/* Gold left accent */}
+            <span style={{
+              display: "block",
+              width: 3,
+              height: 26,
+              background: "linear-gradient(180deg, var(--gold) 0%, #A8873B 100%)",
+              borderRadius: 2,
+              marginRight: 12,
               flexShrink: 0,
+            }} />
+            <span style={{
+              fontFamily: "var(--font-fraunces, 'Fraunces', Georgia, serif)",
+              fontWeight: 900,
+              fontSize: 22,
+              color: "var(--navy)",
+              letterSpacing: "-0.5px",
+              lineHeight: 1,
             }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="10"/>
-                <line x1="2" y1="12" x2="22" y2="12"/>
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-              </svg>
-            </div>
-            <div>
-              <span style={{
-                fontFamily: "var(--font-fraunces, 'Fraunces', Georgia, serif)",
-                fontWeight: 900,
-                fontSize: 20,
-                color: "var(--navy)",
-                letterSpacing: "-0.3px",
-                lineHeight: 1,
-                display: "block",
-              }}>
-                VISA<span style={{ color: "var(--gold)" }}>·</span>ME
-              </span>
-              <span style={{
-                fontSize: 9,
-                fontWeight: 700,
-                letterSpacing: "2px",
-                textTransform: "uppercase",
-                color: "var(--ink-muted)",
-                display: "block",
-                marginTop: 1,
-              }}>U.S. Visa Guides</span>
-            </div>
+              VISA<span style={{ color: "var(--gold)" }}>—</span>ME
+            </span>
           </Link>
 
           {/* Desktop nav links */}

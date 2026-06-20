@@ -38,35 +38,33 @@ export default function HomeClient() {
       {/* ===== HERO ===== */}
       <section id="hero" style={{
         position: "relative",
-        minHeight: "calc(100vh - 68px)",
+        minHeight: "calc(100vh - 74px)",
         display: "flex",
         alignItems: "center",
         overflow: "hidden",
-        background: "var(--cream)",
+        background: "#fdfbf7",
         padding: "80px 0 100px",
       }}>
-        {/* Background decoration */}
+        {/* Background — subtle, professional */}
         <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", overflow: "hidden" }}>
-          <div style={{
-            position: "absolute", top: "8%", right: "10%",
-            width: 500, height: 500,
-            background: "radial-gradient(circle, rgba(201,169,97,0.16) 0%, transparent 65%)",
-            borderRadius: "50%",
-            animation: "float 8s ease-in-out infinite",
-          }} />
-          <div style={{
-            position: "absolute", bottom: "10%", left: "2%",
-            width: 320, height: 320,
-            background: "radial-gradient(circle, rgba(26,58,92,0.07) 0%, transparent 70%)",
-            borderRadius: "50%",
-          }} />
-          {/* Grid pattern */}
+          {/* Soft warm wash */}
           <div style={{
             position: "absolute", inset: 0,
-            backgroundImage: "radial-gradient(circle, rgba(201,169,97,0.08) 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
-            maskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)",
-            WebkitMaskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)",
+            background: "linear-gradient(160deg, #fdfbf7 0%, #f8f4ec 55%, #f3ede2 100%)",
+          }} />
+          {/* Faint right-side gold glow */}
+          <div style={{
+            position: "absolute", top: "-10%", right: "-5%",
+            width: 600, height: 600,
+            background: "radial-gradient(circle, rgba(201,169,97,0.1) 0%, transparent 60%)",
+          }} />
+          {/* Fine grid lines */}
+          <div style={{
+            position: "absolute", inset: 0,
+            backgroundImage: "linear-gradient(rgba(201,169,97,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(201,169,97,0.06) 1px, transparent 1px)",
+            backgroundSize: "48px 48px",
+            maskImage: "linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)",
+            WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)",
           }} />
         </div>
 
@@ -86,26 +84,28 @@ export default function HomeClient() {
           <div>
             {/* Eyebrow */}
             <div className="fade-up" style={{
-              display: "inline-flex",
+              display: "flex",
               alignItems: "center",
-              gap: 10,
-              background: "rgba(201,169,97,0.12)",
-              color: "var(--gold-dark, #A8873B)",
-              padding: "8px 16px",
-              borderRadius: 100,
-              fontSize: 11,
-              fontWeight: 800,
-              letterSpacing: "2px",
-              textTransform: "uppercase",
-              marginBottom: 32,
-              border: "1px solid rgba(201,169,97,0.3)",
+              gap: 14,
+              marginBottom: 28,
             }}>
               <span style={{
-                width: 6, height: 6, background: "var(--gold)", borderRadius: "50%",
-                animation: "pulse 2s ease-in-out infinite",
+                display: "block",
+                width: 32,
+                height: 1.5,
+                background: "var(--gold)",
+                borderRadius: 2,
                 flexShrink: 0,
               }} />
-              {t("hero.eyebrow")}
+              <span style={{
+                fontSize: 12,
+                fontWeight: 700,
+                letterSpacing: "2.5px",
+                textTransform: "uppercase",
+                color: "var(--gold-dark, #A8873B)",
+              }}>
+                {t("hero.eyebrow")}
+              </span>
             </div>
 
             {/* Headline */}
@@ -165,41 +165,48 @@ export default function HomeClient() {
           {/* Right: Lead Magnet Card */}
           <div id="lead-magnet" className="fade-up delay-2" style={{
             background: "white",
-            borderRadius: 20,
-            padding: "40px 36px",
-            boxShadow: "0 2px 0 rgba(255,255,255,0.8) inset, 0 40px 100px rgba(26,58,92,0.2), 0 12px 28px rgba(26,58,92,0.1)",
+            borderRadius: 16,
+            padding: "36px 32px 32px",
+            boxShadow: "0 24px 64px rgba(26,58,92,0.16), 0 4px 16px rgba(26,58,92,0.08)",
             position: "relative",
-            border: "1px solid rgba(255,255,255,0.9)",
+            border: "1px solid #eae5db",
           }}>
-            {/* Gradient top bar */}
+            {/* Gold top accent */}
             <div style={{
               position: "absolute", top: 0, left: 0, right: 0,
-              height: 4,
-              background: "linear-gradient(90deg, var(--navy) 0%, var(--navy-light) 40%, var(--gold) 100%)",
-              borderRadius: "20px 20px 0 0",
+              height: 3,
+              background: "linear-gradient(90deg, #C9A961 0%, #A8873B 100%)",
+              borderRadius: "16px 16px 0 0",
             }} />
 
             {/* Badge */}
-            <div style={{ marginBottom: 20 }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
               <span style={{
                 display: "inline-flex",
                 alignItems: "center",
-                gap: 6,
-                background: "rgba(45,106,79,0.1)",
-                color: "var(--green)",
-                padding: "6px 14px",
-                borderRadius: 100,
-                fontSize: 11,
+                gap: 7,
+                background: "rgba(26,58,92,0.06)",
+                color: "var(--navy)",
+                padding: "5px 12px",
+                borderRadius: 6,
+                fontSize: 10,
                 fontWeight: 800,
-                letterSpacing: 1,
+                letterSpacing: "2px",
                 textTransform: "uppercase",
-                border: "1px solid rgba(45,106,79,0.2)",
+                border: "1px solid rgba(26,58,92,0.1)",
               }}>
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="var(--green)">
-                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
                 </svg>
                 {t("magnet.badge")}
               </span>
+              <span style={{
+                fontSize: 10,
+                fontWeight: 700,
+                color: "var(--ink-muted)",
+                letterSpacing: "1px",
+                textTransform: "uppercase",
+              }}>No card required</span>
             </div>
 
             <h3 style={{
