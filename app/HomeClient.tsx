@@ -8,7 +8,7 @@ const productKeys = [
   { id: "b1", price: 39, href: "https://visame.gumroad.com/l/cijoz", featured: true,
     img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=80" },
   { id: "f1", price: 49, href: "https://visame.gumroad.com/l/qyrszj", isNew: true,
-    img: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80" },
+    img: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600&q=80" },
   { id: "k1", price: 59, href: "https://visame.gumroad.com/l/cwhux",
     img: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=600&q=80" },
   { id: "ir", price: 59, href: "https://visame.gumroad.com/l/nwchsj",
