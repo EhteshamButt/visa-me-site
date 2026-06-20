@@ -247,27 +247,59 @@ export default function HomeClient() {
 
       {/* ===== SOCIAL PROOF BAR ===== */}
       <div style={{
-        background: "var(--navy-dark)",
+        background: "#0f2540",
         borderTop: "1px solid rgba(255,255,255,0.06)",
-        padding: "22px 40px",
-        overflow: "hidden",
+        borderBottom: "1px solid rgba(255,255,255,0.04)",
+        padding: "18px 40px",
       }}>
         <div style={{
           maxWidth: 1200, margin: "0 auto",
           display: "flex", alignItems: "center", justifyContent: "center",
-          gap: 40, flexWrap: "wrap",
+          gap: 0, flexWrap: "wrap",
         }}>
           {[
-            { label: "Plain English, no legalese", icon: "📖" },
-            { label: "Updated for 2026 fee changes", icon: "🔄" },
-            { label: "Instant PDF download", icon: "⚡" },
-            { label: "7 languages available", icon: "🌍" },
-          ].map((item) => (
+            {
+              label: "Plain English, no legalese",
+              icon: (
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                </svg>
+              ),
+            },
+            {
+              label: "Updated for 2026 fee changes",
+              icon: (
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                </svg>
+              ),
+            },
+            {
+              label: "Instant PDF download",
+              icon: (
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+              ),
+            },
+            {
+              label: "Available in 7 languages",
+              icon: (
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+              ),
+            },
+          ].map((item, i, arr) => (
             <div key={item.label} style={{
-              display: "flex", alignItems: "center", gap: 10,
-              color: "rgba(255,255,255,0.65)", fontSize: 13, fontWeight: 600,
+              display: "flex", alignItems: "center", gap: 9,
+              color: "rgba(255,255,255,0.6)",
+              fontSize: 13,
+              fontWeight: 500,
+              padding: "8px 28px",
+              borderRight: i < arr.length - 1 ? "1px solid rgba(255,255,255,0.1)" : "none",
             }}>
-              <span style={{ fontSize: 16 }}>{item.icon}</span>
+              {item.icon}
               {item.label}
             </div>
           ))}
