@@ -121,7 +121,7 @@ export default function HomeClient() {
         <div className="hero-image-col">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1000&q=85"
+            src="https://images.unsplash.com/photo-1569154941061-e231b4725ef1?w=1000&q=85"
             alt="Travel"
             style={{
               width: "100%",
