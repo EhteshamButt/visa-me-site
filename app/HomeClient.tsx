@@ -23,7 +23,16 @@ const productKeys: Array<{
   { id: "f1", price: 49, href: "https://visame.gumroad.com/l/qyrszj", isNew: true,
     img: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600&q=80" },
   { id: "k1", price: 59, href: "https://visame.gumroad.com/l/cwhux",
-    img: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=600&q=80" },
+    img: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=600&q=80",
+    hrefs: {
+      en: "https://visame.gumroad.com/l/cwhux",
+      es: "https://visame.gumroad.com/l/criffs",
+      pt: "https://visame.gumroad.com/l/lnwjdp",
+      fr: "https://visame.gumroad.com/l/fegllw",
+      de: "https://visame.gumroad.com/l/ktbqfh",
+      zh: "https://visame.gumroad.com/l/miqkpm",
+      vi: "https://visame.gumroad.com/l/stpvpg",
+    } },
   { id: "ir", price: 59, href: "https://visame.gumroad.com/l/nwchsj",
     img: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=80",
     hrefs: {
