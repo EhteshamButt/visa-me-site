@@ -4,9 +4,22 @@ import FAQ from "@/components/FAQ";
 import LeadMagnetForm from "@/components/LeadMagnetForm";
 import { useLanguage } from "@/context/LanguageContext";
 
-const productKeys = [
+const productKeys: Array<{
+  id: string; price: number; href: string; img: string;
+  featured?: boolean; isNew?: boolean;
+  hrefs?: Record<string, string>;
+}> = [
   { id: "b1", price: 39, href: "https://visame.gumroad.com/l/cijoz", featured: true,
-    img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=80" },
+    img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=80",
+    hrefs: {
+      en: "https://visame.gumroad.com/l/cijoz",
+      es: "https://visame.gumroad.com/l/qyrszj",
+      pt: "https://visame.gumroad.com/l/hbriso",
+      fr: "https://visame.gumroad.com/l/pgcvmr",
+      de: "https://visame.gumroad.com/l/ayxmur",
+      zh: "https://visame.gumroad.com/l/icnggd",
+      vi: "https://visame.gumroad.com/l/rqorl",
+    } },
   { id: "f1", price: 49, href: "https://visame.gumroad.com/l/qyrszj", isNew: true,
     img: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600&q=80" },
   { id: "k1", price: 59, href: "https://visame.gumroad.com/l/cwhux",
@@ -37,7 +50,7 @@ const trustItems = [
 ] as const;
 
 export default function HomeClient() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   return (
     <>
@@ -430,7 +443,7 @@ export default function HomeClient() {
                     }}>PDF · Instant</div>
                   </div>
 
-                  <a href={p.href} target="_blank" rel="noopener noreferrer" style={{
+                  <a href={p.hrefs?.[lang] ?? p.href} target="_blank" rel="noopener noreferrer" style={{
                     display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
                     background: p.featured
                       ? "linear-gradient(135deg, var(--gold) 0%, var(--gold-dark, #A8873B) 100%)"
@@ -572,8 +585,8 @@ export default function HomeClient() {
             gridTemplateColumns: "repeat(auto-fill, minmax(210px, 1fr))",
             gap: 14, marginTop: 8,
           }}>
-            {languages.map((lang) => (
-              <a key={lang.name} href={`/${lang.file}`} download style={{
+            {languages.map((lng: typeof languages[number]) => (
+              <a key={lng.name} href={`/${lng.file}`} download style={{
                 background: "white",
                 border: "1px solid var(--line)",
                 borderRadius: 14, padding: "24px 22px",
@@ -593,21 +606,21 @@ export default function HomeClient() {
                   (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--line)";
                 }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <span style={{ fontSize: 36, lineHeight: 1 }}>{lang.flag}</span>
+                  <span style={{ fontSize: 36, lineHeight: 1 }}>{lng.flag}</span>
                   <span style={{
                     fontSize: 10, fontWeight: 800, letterSpacing: "1.5px",
                     textTransform: "uppercase", padding: "4px 10px", borderRadius: 100,
                     background: "rgba(45,106,79,0.1)", color: "var(--green)",
                     border: "1px solid rgba(45,106,79,0.2)",
-                  }}>{lang.tag}</span>
+                  }}>{lng.tag}</span>
                 </div>
                 <div>
                   <div style={{
                     fontFamily: "var(--font-fraunces, 'Fraunces', Georgia, serif)",
                     fontSize: 18, fontWeight: 800, color: "var(--navy)",
                     letterSpacing: "-0.3px", lineHeight: 1.15,
-                  }}>{lang.name}</div>
-                  <div style={{ fontSize: 12, color: "var(--ink-muted)", marginTop: 5 }}>{lang.native}</div>
+                  }}>{lng.name}</div>
+                  <div style={{ fontSize: 12, color: "var(--ink-muted)", marginTop: 5 }}>{lng.native}</div>
                 </div>
                 <div style={{
                   marginTop: "auto",
@@ -615,7 +628,7 @@ export default function HomeClient() {
                   fontSize: 12, fontWeight: 800, color: "var(--gold-dark, #A8873B)",
                   textTransform: "uppercase", letterSpacing: "1.5px",
                 }}>
-                  {lang.action}
+                  {lng.action}
                 </div>
               </a>
             ))}
