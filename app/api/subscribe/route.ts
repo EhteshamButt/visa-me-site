@@ -3,8 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 const FORM_IDS: Record<string, string> = {
   en: "9481764",
   es: "9607659",
+  pt: "9607723",
   // Add more as you create them in Kit:
-  // pt: "XXXXXXX",
+  // fr: "XXXXXXX",
   // fr: "XXXXXXX",
   // de: "XXXXXXX",
   // zh: "XXXXXXX",
