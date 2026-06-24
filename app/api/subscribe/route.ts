@@ -1,5 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 
+const FORM_IDS: Record<string, string> = {
+  en: "9481764",
+  es: "9607659",
+  // Add more as you create them in Kit:
+  // pt: "XXXXXXX",
+  // fr: "XXXXXXX",
+  // de: "XXXXXXX",
+  // zh: "XXXXXXX",
+  // vi: "XXXXXXX",
+};
+
 export async function POST(request: NextRequest) {
   try {
     const { email, language } = await request.json();
@@ -8,10 +19,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid email" }, { status: 400 });
     }
 
+    const formId = FORM_IDS[language] ?? FORM_IDS["en"];
+
     const body = new URLSearchParams({ email_address: email });
     if (language) body.append("fields[language]", language);
 
-    const res = await fetch("https://app.kit.com/forms/9481764/subscriptions", {
+    const res = await fetch(`https://app.kit.com/forms/${formId}/subscriptions`, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
