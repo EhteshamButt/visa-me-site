@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { posts, getPost } from "@/data/posts";
+import BlogPostClient from "@/components/BlogPostClient";
 
 export function generateStaticParams() {
   return posts.map((p) => ({ slug: p.slug }));
@@ -34,22 +35,5 @@ export default async function BlogPost({
   const post = getPost(slug);
   if (!post) notFound();
 
-  return (
-    <main className="container-narrow article">
-      <header className="article-header">
-        <div className="article-meta">
-          <span>{post.date}</span>
-          <span className="dot">•</span>
-          <span>{post.category}</span>
-          <span className="dot">•</span>
-          <span>{post.readTime}</span>
-        </div>
-        <h1 className="article-title">{post.title}</h1>
-      </header>
-      <div
-        className="article-body"
-        dangerouslySetInnerHTML={{ __html: post.content }}
-      />
-    </main>
-  );
+  return <BlogPostClient post={post} />;
 }
