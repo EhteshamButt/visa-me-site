@@ -40,7 +40,7 @@ export default function Nav() {
     { href: "/#quiz", label: t("nav.quiz") },
     { href: "/#products", label: t("nav.guides") },
     { href: "/checklists", label: t("nav.checklists") },
-    { href: "/blog", label: "Blog" },
+    { href: "/blog", label: t("nav.blog") },
     { href: "/#faq", label: t("nav.faq") },
   ];
 

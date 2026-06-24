@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import { CHECKLIST_TRANSLATIONS } from "@/data/checklist-translations";
 
 type ChecklistItem = { text: string; detail: string };
 type Phase = { name: string; subtitle: string; items: ChecklistItem[] };
@@ -345,7 +346,7 @@ const VISA_LABEL_KEYS: Record<string, string> = {
 const STORAGE_KEY = "visame-checklist-v1";
 
 export default function Checklists() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const visaKeys = Object.keys(CHECKLIST_DATA);
   const [activeVisa, setActiveVisa] = useState(visaKeys[0]);
   const [checked, setChecked] = useState<Record<string, boolean>>({});
@@ -389,7 +390,7 @@ export default function Checklists() {
     return `${done}/${items.length}`;
   }
 
-  const visa = CHECKLIST_DATA[activeVisa];
+  const visa = (CHECKLIST_TRANSLATIONS[lang] || {})[activeVisa] || CHECKLIST_DATA[activeVisa];
   const prog = getProgress(activeVisa);
 
   return (

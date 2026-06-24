@@ -21,7 +21,7 @@ export default function BlogPostClient({ post }: { post: Post }) {
       </header>
       <div
         className="article-body"
-        dangerouslySetInnerHTML={{ __html: post.content }}
+        dangerouslySetInnerHTML={{ __html: meta.content || post.content }}
       />
     </main>
   );

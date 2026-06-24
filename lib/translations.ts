@@ -8,6 +8,7 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'nav.languages': 'Languages',
     'nav.about': 'About',
     'nav.faq': 'FAQ',
+    'nav.blog': 'Blog',
     'nav.cta': 'Free Guide',
 
     'hero.eyebrow': '2026 Edition · Updated October',
@@ -27,6 +28,7 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'magnet.button': 'Send Me The Free Guide',
     'magnet.fineprint': 'No spam. Unsubscribe anytime. We never sell your email.',
     'magnet.toast': 'Check your email — your free guide is on the way!',
+    'magnet.error': 'Something went wrong. Please try again.',
 
     'quiz.eyebrow': 'Visa Finder',
     'quiz.title': 'Not sure which visa you need?',
@@ -201,6 +203,7 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'nav.languages': 'Idiomas',
     'nav.about': 'Acerca de',
     'nav.faq': 'Preguntas',
+    'nav.blog': 'Blog',
     'nav.cta': 'Guía Gratis',
 
     'hero.eyebrow': 'Edición 2026 · Actualizada en Octubre',
@@ -219,6 +222,7 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'magnet.placeholder': 'Tu correo electrónico',
     'magnet.button': 'Envíame La Guía Gratis',
     'magnet.fineprint': 'Sin spam. Cancela cuando quieras. Nunca vendemos tu correo.',
+    'magnet.error': 'Algo salió mal. Por favor inténtelo de nuevo.',
     'magnet.toast': 'Revisa tu correo — ¡tu guía gratis está en camino!',
 
     'quiz.eyebrow': 'Buscador de Visa',
@@ -393,6 +397,7 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'nav.languages': 'Idiomas',
     'nav.about': 'Sobre',
     'nav.faq': 'Perguntas',
+    'nav.blog': 'Blog',
     'nav.cta': 'Guia Grátis',
 
     'hero.eyebrow': 'Edição 2026 · Atualizada em Outubro',
@@ -411,6 +416,7 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'magnet.placeholder': 'Seu e-mail',
     'magnet.button': 'Me Envie O Guia Grátis',
     'magnet.fineprint': 'Sem spam. Cancele quando quiser. Nunca vendemos seu e-mail.',
+    'magnet.error': 'Algo deu errado. Por favor, tente novamente.',
     'magnet.toast': 'Verifique seu e-mail — seu guia grátis está a caminho!',
 
     'quiz.eyebrow': 'Localizador de Visto',
@@ -585,6 +591,7 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'nav.languages': 'Langues',
     'nav.about': 'À propos',
     'nav.faq': 'FAQ',
+    'nav.blog': 'Blog',
     'nav.cta': 'Guide Gratuit',
 
     'hero.eyebrow': 'Édition 2026 · Mise à jour Octobre',
@@ -603,6 +610,7 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'magnet.placeholder': 'Votre adresse e-mail',
     'magnet.button': 'Envoyez-Moi Le Guide Gratuit',
     'magnet.fineprint': 'Pas de spam. Désabonnement à tout moment. Nous ne vendons jamais votre e-mail.',
+    'magnet.error': 'Une erreur s\'est produite. Veuillez réessayer.',
     'magnet.toast': 'Vérifiez votre e-mail — votre guide gratuit arrive !',
 
     'quiz.eyebrow': 'Trouve-Visa',
@@ -777,6 +785,7 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'nav.languages': 'Sprachen',
     'nav.about': 'Über uns',
     'nav.faq': 'FAQ',
+    'nav.blog': 'Blog',
     'nav.cta': 'Kostenloser Leitfaden',
 
     'hero.eyebrow': 'Ausgabe 2026 · Aktualisiert Oktober',
@@ -795,6 +804,7 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'magnet.placeholder': 'Ihre E-Mail-Adresse',
     'magnet.button': 'Senden Sie Mir Den Kostenlosen Leitfaden',
     'magnet.fineprint': 'Kein Spam. Jederzeit abbestellen. Wir verkaufen Ihre E-Mail niemals.',
+    'magnet.error': 'Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.',
     'magnet.toast': 'Prüfen Sie Ihre E-Mails — Ihr kostenloser Leitfaden ist unterwegs!',
 
     'quiz.eyebrow': 'Visum-Finder',
@@ -969,6 +979,7 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'nav.languages': '语言',
     'nav.about': '关于',
     'nav.faq': '常见问题',
+    'nav.blog': '博客',
     'nav.cta': '免费指南',
 
     'hero.eyebrow': '2026 版 · 10 月更新',
@@ -987,6 +998,7 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'magnet.placeholder': '您的电子邮件地址',
     'magnet.button': '发送免费指南给我',
     'magnet.fineprint': '没有垃圾邮件。随时退订。我们绝不出售您的邮箱。',
+    'magnet.error': '出了点问题。请再试一次。',
     'magnet.toast': '请查看您的邮箱——免费指南正在路上!',
 
     'quiz.eyebrow': '签证查找器',
@@ -1161,6 +1173,7 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'nav.languages': 'Ngôn Ngữ',
     'nav.about': 'Giới Thiệu',
     'nav.faq': 'Câu Hỏi Thường Gặp',
+    'nav.blog': 'Blog',
     'nav.cta': 'Hướng Dẫn Miễn Phí',
 
     'hero.eyebrow': 'Bản 2026 · Cập Nhật Tháng 10',
@@ -1179,6 +1192,7 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'magnet.placeholder': 'Địa chỉ email của bạn',
     'magnet.button': 'Gửi Cho Tôi Hướng Dẫn Miễn Phí',
     'magnet.fineprint': 'Không thư rác. Hủy đăng ký bất cứ lúc nào. Chúng tôi không bao giờ bán email của bạn.',
+    'magnet.error': 'Đã xảy ra lỗi. Vui lòng thử lại.',
     'magnet.toast': 'Kiểm tra email của bạn — hướng dẫn miễn phí đang đến!',
 
     'quiz.eyebrow': 'Trình Tìm Visa',

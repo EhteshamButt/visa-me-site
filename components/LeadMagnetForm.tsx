@@ -1,57 +1,93 @@
 "use client";
-import Script from "next/script";
+import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function LeadMagnetForm({ inline = false }: { inline?: boolean }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [email, setEmail] = useState("");
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setStatus("loading");
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, language: lang }),
+      });
+      if (res.ok) {
+        setStatus("success");
+        setEmail("");
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  }
+
+  if (status === "success") {
+    return (
+      <div style={{
+        marginTop: 12,
+        padding: "16px 18px",
+        background: "rgba(45,106,79,0.08)",
+        border: "2px solid var(--green)",
+        borderRadius: 10,
+        textAlign: "center",
+        fontSize: 15,
+        fontWeight: 600,
+        color: "var(--green)",
+      }}>
+        {t("magnet.toast")}
+      </div>
+    );
+  }
+
   return (
     <>
-      <Script src="https://f.convertkit.com/ckjs/ck.5.js" strategy="afterInteractive" />
-
       <form
-        action="https://app.kit.com/forms/9481764/subscriptions"
-        method="post"
-        data-sv-form="9481764"
-        data-uid="3808d012a8"
-        data-format="inline"
-        data-version="5"
-        className={`kit-inline-form formkit-form${inline ? " kit-inline-form--row" : ""}`}
+        onSubmit={handleSubmit}
+        className={`kit-inline-form${inline ? " kit-inline-form--row" : ""}`}
       >
         <div className="input-group">
           <input
             className="formkit-input"
             type="email"
-            name="email_address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder={t("magnet.placeholder")}
             aria-label="Email address"
             required
+            disabled={status === "loading"}
           />
           <button
             type="submit"
-            data-element="submit"
             className="formkit-submit"
+            disabled={status === "loading"}
           >
-            <div className="formkit-spinner">
+            <div className="formkit-spinner" style={{ display: status === "loading" ? "flex" : "none" }}>
               <div /><div /><div />
             </div>
-            <span>{t("magnet.button")}</span>
+            <span style={{ opacity: status === "loading" ? 0 : 1 }}>{t("magnet.button")}</span>
           </button>
         </div>
-        <ul
-          className="formkit-alert formkit-alert-error"
-          data-element="errors"
-          data-group="alert"
-        />
+        {status === "error" && (
+          <p style={{
+            padding: "10px 14px",
+            marginTop: 8,
+            background: "rgba(176,65,62,0.08)",
+            borderLeft: "3px solid var(--red)",
+            borderRadius: 4,
+            fontSize: 13,
+            color: "var(--red)",
+            listStyle: "none",
+          }}>
+            {t("magnet.error")}
+          </p>
+        )}
       </form>
-
-      <div
-        id="3808d012a8"
-        className="formkit-alert formkit-alert-success"
-        data-element="success"
-        data-group="alert"
-      >
-        Thank you for signing up.
-      </div>
 
       {!inline && (
         <p style={{
@@ -87,6 +123,7 @@ export default function LeadMagnetForm({ inline = false }: { inline?: boolean })
         }
         .kit-inline-form .formkit-input:focus { border-color: var(--navy); }
         .kit-inline-form .formkit-input::placeholder { color: #aaa; }
+        .kit-inline-form .formkit-input:disabled { opacity: 0.6; }
         .kit-inline-form .formkit-submit {
           position: relative;
           background: var(--navy);
@@ -107,7 +144,8 @@ export default function LeadMagnetForm({ inline = false }: { inline?: boolean })
           transition: background 0.15s;
           white-space: nowrap;
         }
-        .kit-inline-form .formkit-submit:hover { background: var(--navy-light); }
+        .kit-inline-form .formkit-submit:hover:not(:disabled) { background: var(--navy-light); }
+        .kit-inline-form .formkit-submit:disabled { opacity: 0.7; cursor: default; }
 
         /* ── Inline (row) variant ── */
         .kit-inline-form--row .input-group {
@@ -128,11 +166,9 @@ export default function LeadMagnetForm({ inline = false }: { inline?: boolean })
 
         /* ── Spinner ── */
         .kit-inline-form .formkit-spinner {
-          display: none;
           gap: 3px;
           align-items: center;
         }
-        .kit-inline-form[data-active] .formkit-spinner { display: flex; }
         .kit-inline-form .formkit-spinner > div {
           width: 4px; height: 4px;
           background: white;
@@ -144,31 +180,6 @@ export default function LeadMagnetForm({ inline = false }: { inline?: boolean })
         @keyframes kit-bounce {
           0%, 80%, 100% { transform: scale(0); }
           40% { transform: scale(1); }
-        }
-
-        /* ── Alerts ── */
-        .kit-inline-form .formkit-alert-error {
-          list-style: none;
-          padding: 10px 14px;
-          margin-top: 8px;
-          background: rgba(176,65,62,0.08);
-          border-left: 3px solid var(--red);
-          border-radius: 4px;
-          font-size: 13px;
-          color: var(--red);
-        }
-        .kit-inline-form .formkit-alert-error:empty { display: none; }
-        #3808d012a8.formkit-alert-success {
-          display: none;
-          margin-top: 12px;
-          padding: 16px 18px;
-          background: rgba(45,106,79,0.08);
-          border: 2px solid var(--green);
-          border-radius: 10px;
-          text-align: center;
-          font-size: 15px;
-          font-weight: 600;
-          color: var(--green);
         }
       `}</style>
     </>

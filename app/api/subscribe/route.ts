@@ -2,13 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
-    const { email } = await request.json();
+    const { email, language } = await request.json();
 
     if (!email || !email.includes("@")) {
       return NextResponse.json({ error: "Invalid email" }, { status: 400 });
     }
 
     const body = new URLSearchParams({ email_address: email });
+    if (language) body.append("fields[language]", language);
 
     const res = await fetch("https://app.kit.com/forms/9481764/subscriptions", {
       method: "POST",

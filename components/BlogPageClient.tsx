@@ -45,6 +45,7 @@ export default function BlogPageClient() {
             method="post"
             target="_blank"
           >
+            <input type="hidden" name="fields[language]" value={lang} />
             <input
               type="email"
               name="email_address"
