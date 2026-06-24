@@ -7,8 +7,7 @@ const FORM_IDS: Record<string, string> = {
   fr: "9607743",
   de: "9607758",
   zh: "9607776",
-  // Add more as you create them in Kit:
-  // vi: "XXXXXXX",
+  vi: "9607778",
 };
 
 export async function POST(request: NextRequest) {
