@@ -6,8 +6,8 @@ const FORM_IDS: Record<string, string> = {
   pt: "9607723",
   fr: "9607743",
   de: "9607758",
+  zh: "9607776",
   // Add more as you create them in Kit:
-  // zh: "XXXXXXX",
   // vi: "XXXXXXX",
 };
 
