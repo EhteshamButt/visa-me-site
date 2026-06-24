@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useLanguage } from "@/context/LanguageContext";
 
 type ChecklistItem = { text: string; detail: string };
 type Phase = { name: string; subtitle: string; items: ChecklistItem[] };
@@ -332,18 +333,19 @@ const CHECKLIST_DATA: Record<string, VisaChecklist> = {
   },
 };
 
-const VISA_LABELS: Record<string, string> = {
-  b1b2: "B-1/B-2 Tourist",
-  f1: "F-1 Student",
-  j1: "J-1 Exchange",
-  k1: "K-1 Fiancé(e)",
-  ircr: "IR/CR Spouse",
-  h1b: "H-1B Worker",
+const VISA_LABEL_KEYS: Record<string, string> = {
+  b1b2: "checklist.tab.b1b2",
+  f1: "checklist.tab.f1",
+  j1: "checklist.tab.j1",
+  k1: "checklist.tab.k1",
+  ircr: "checklist.tab.ircr",
+  h1b: "checklist.tab.h1b",
 };
 
 const STORAGE_KEY = "visame-checklist-v1";
 
 export default function Checklists() {
+  const { t } = useLanguage();
   const visaKeys = Object.keys(CHECKLIST_DATA);
   const [activeVisa, setActiveVisa] = useState(visaKeys[0]);
   const [checked, setChecked] = useState<Record<string, boolean>>({});
@@ -416,7 +418,7 @@ export default function Checklists() {
                 transition: "color 0.15s, border-color 0.15s",
                 whiteSpace: "nowrap",
               }}>
-                {VISA_LABELS[key]}
+                {t(VISA_LABEL_KEYS[key])}
                 <span style={{
                   display: "inline-block", marginLeft: 8, fontSize: 11,
                   background: isComplete ? "var(--green-soft)" : isActive ? "var(--gold-soft)" : "var(--bg-warm)",
@@ -459,7 +461,7 @@ export default function Checklists() {
               fontFamily: "var(--font-fraunces, 'Fraunces', Georgia, serif)",
               fontSize: 32, fontWeight: 700, color: "var(--navy)", lineHeight: 1,
             }}>{prog.pct}%</div>
-            <div style={{ fontSize: 13, color: "var(--ink-muted)" }}>{prog.done} of {prog.total} complete</div>
+            <div style={{ fontSize: 13, color: "var(--ink-muted)" }}>{prog.done} {t("checklist.of")} {prog.total} {t("checklist.complete")}</div>
           </div>
         </div>
 
@@ -469,7 +471,7 @@ export default function Checklists() {
             background: "transparent", border: "1px solid var(--line)", borderRadius: 6,
             padding: "8px 14px", fontFamily: "inherit", fontSize: 13, fontWeight: 600,
             color: "var(--ink-soft)", cursor: "pointer",
-          }}>Reset this checklist</button>
+          }}>{t("checklist.reset")}</button>
         </div>
 
         {/* Phases */}
@@ -554,9 +556,9 @@ export default function Checklists() {
             <h3 style={{
               fontFamily: "var(--font-fraunces, 'Fraunces', Georgia, serif)",
               fontSize: 26, color: "var(--green)", marginBottom: 8,
-            }}>You&apos;re all done! ✓</h3>
+            }}>{t("checklist.done.title")}</h3>
             <p style={{ color: "var(--ink)", fontSize: 15 }}>
-              You&apos;ve completed all steps for the {visa.title}. Good luck with your application!
+              {t("checklist.done.body")}
             </p>
           </div>
         )}
